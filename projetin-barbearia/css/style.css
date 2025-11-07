@@ -1,146 +1,175 @@
-/* style.css */
+/* style.css - OTIMIZADO PARA BOOTSTRAP COM OVERLAY DE FUNDO */
+
+/* ---------------------------------------------------- */
+/* 1. VARIÁVEIS DE TEMA (Mapeando o seu tema para o Bootstrap) */
+/* ---------------------------------------------------- */
 :root{
-  --bg-image: url("../images/fundo01.png"); /* relative ao css (css/ -> ../images/) */
-  --gold: #c9a34d;
-  --gold-2: #e0b859;
-  --muted: rgba(255,255,255,0.85);
-  --card-bg: rgba(0,0,0,0.6);
-  --max-width: 1100px;
+    /* IMAGEM DE FUNDO (Caminho relativo ao css/) */
+    --bg-image: url("../images/fundo02.png"); 
+    
+    /* CORES PERSONALIZADAS: O Bootstrap vai herdar a cor primary daqui! */
+    --bs-primary: #c9a34d; /* SEU GOLD */
+    --gold-2: #e0b859; /* GOLD para hover/secundário */
+    
+    /* CORES DE TEXTO E FUNDO */
+    --bs-dark: #0b0b0b; /* Fundo preto base */
+    --bs-body-color: #fff; /* Cor do texto principal */
+    --bs-secondary-color: rgba(255,255,255,0.85); /* Seu 'muted' */
+    
+    --card-bg: rgba(0,0,0,0.6);
+    --max-width: 1100px;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%;margin:0;padding:0;font-family:'Montserrat',sans-serif;color:#fff;}
+/* ---------------------------------------------------- */
+/* 2. ESTILOS GLOBAIS, FUNDO E OVERLAY */
+/* ---------------------------------------------------- */
+*{
+    box-sizing: border-box;
+}
 
-/* Background: use caminho relativo e sem / inicial */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+    /* Força a cor da fonte a ser branca globalmente */
+    color: var(--bs-body-color) !important; 
+}
+
 body{
-  background-image: var(--bg-image);
-  background-repeat:no-repeat;
-  background-size:cover;
-  background-position:center;
-  background-color:#0b0b0b;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
+    background-image: var(--bg-image);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--bs-dark);
+    padding-top: 0; 
+    /* Garante que o body possa ser o container do overlay */
+    position: relative; 
 }
 
-/* header */
-header{
-  background: linear-gradient(180deg, rgba(0,0,0,0.8), rgba(0,0,0,0.65));
-  padding:18px 12px;
-  text-align:center;
-  border-bottom: 3px solid var(--gold);
-  position:sticky;
-  top:0;
-  z-index:50;
+/* NOVO: CAMADA ESCURA (OVERLAY) SOBRE A IMAGEM DE FUNDO */
+body::before {
+    content: '';
+    position: fixed; /* Fixa o overlay para cobrir a tela toda */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Cor preta com 60% de opacidade. Ajuste 0.6 para mais ou menos escuridão. */
+    background-color: rgba(0, 0, 0, 0.6); 
+    z-index: -1; /* Coloca a camada abaixo do conteúdo do site */
 }
 
-header .top h1{margin:0;color:var(--gold);font-size:26px;letter-spacing:1px}
-header .slogan{margin:4px 0 0;color:var(--muted);font-size:14px}
-
-nav{margin-top:10px}
-nav a{
-  color:var(--muted);
-  margin:0 12px;
-  text-decoration:none;
-  font-weight:600;
-  transition: color .2s, transform .2s;
+/* Força todos os textos a serem brancos (ajuste de segurança) */
+.text-dark {
+    color: var(--bs-body-color) !important;
 }
-nav a:hover{ color:var(--gold); transform:translateY(-2px); }
-
-/* main container */
-main{
-  max-width:var(--max-width);
-  margin:28px auto;
-  padding:22px;
-  background: rgba(0,0,0,0.45);
-  border-radius:10px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+.text-muted {
+    color: var(--bs-secondary-color) !important;
 }
 
-/* sections */
-.card-section{ margin-bottom:26px; padding:12px; border-radius:8px; background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); }
-h2{ color:var(--gold); margin:8px 0 12px; border-bottom:2px solid rgba(201,163,77,0.18); padding-bottom:6px; }
 
-/* gallery */
-.galeria{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+/* ---------------------------------------------------- */
+/* 3. AJUSTES DE COMPONENTES DO BOOTSTRAP (Foco no Menu) */
+/* ---------------------------------------------------- */
+
+/* Ajuste do Navbar (Borda Dourada Abaixo) */
+.navbar-dark {
+    border-bottom: 3px solid var(--bs-primary);
+}
+
+/* TÍTULO/BRAND da Barbearia */
+.navbar-brand {
+    color: var(--bs-primary) !important; /* Força o Título a ser Dourado */
+    font-weight: 700;
+    transition: transform 0.3s ease;
+}
+.navbar-brand:hover {
+    color: var(--gold-2) !important;
+    transform: scale(1.03); /* Leve animação no hover */
+}
+
+
+/* Links de Navegação (Padrão) */
+.navbar-nav .nav-link {
+    color: var(--bs-body-color) !important; /* Força os links inativos a serem brancos */
+    font-weight: 500;
+    margin: 0 5px;
+    transition: color 0.2s, border-bottom 0.2s;
+}
+
+/* Links da navegação ATIVA e HOVER (Dourado e Animação) */
+.navbar-nav .nav-link:hover {
+    color: var(--gold-2) !important; /* Dourado mais claro no hover */
+    transform: translateY(-1px); /* Leve levantamento no hover */
+}
+
+.navbar-nav .nav-link.active {
+    color: var(--bs-primary) !important; /* Dourado na página ativa */
+    border-bottom: 2px solid var(--bs-primary); /* Borda Dourada Abaixo do item ativo */
+    font-weight: 600;
+}
+
+/* Slogan (Ajuste para melhor visibilidade) */
+.slogan {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--bs-secondary-color); /* Usa o branco suave */
+    /* Se a navbar for escura, ajuste a cor do texto para claro */
+}
+/* ---------------------------------------------------- */
+/* 4. ESTILOS DE COMPONENTES ANTIGOS */
+/* ---------------------------------------------------- */
+
+/* Galeria de imagens antiga (apenas se for usada no lugar dos Cards) */
 .galeria img{
-  width:200px; height:150px; object-fit:cover;
-  border-radius:8px; border:2px solid var(--gold);
-  box-shadow:0 6px 18px rgba(0,0,0,0.6); transition: transform .25s ease;
+    object-fit:cover;
+    border-radius:8px; 
+    border:2px solid var(--bs-primary); 
+    box-shadow:0 6px 18px rgba(0,0,0,0.6); 
+    transition: transform .25s ease;
 }
 .galeria img:hover{ transform:scale(1.04); }
 
-/* tabela */
-.tabela{ overflow-x:auto; }
-table{ width:100%; border-collapse:collapse; margin-top:8px; }
-th, td{ padding:12px; border:1px solid rgba(201,163,77,0.18); text-align:center; }
-th{ background: rgba(201,163,77,0.12); color:var(--gold); }
-
-/* form */
-form{ display:flex; flex-direction:column; gap:10px; margin-top:8px; }
-input, textarea{
-  padding:10px; border-radius:6px; border:1px solid rgba(201,163,77,0.18);
-  background: rgba(255,255,255,0.06); color:#fff; resize:vertical;
-}
-button{
-  background:var(--gold); color:#000; padding:10px; border:none; border-radius:6px; cursor:pointer; font-weight:700;
-}
-button:hover{ background:var(--gold-2); }
-
-/* map */
-.map-wrap{ margin-top:10px; border-radius:8px; overflow:hidden; }
-
-/* footer */
-footer{
-  text-align:center; padding:14px 12px; margin-top:18px; border-top:2px solid rgba(201,163,77,0.12);
-  background: linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.35));
-}
-
-/* responsive */
-@media (max-width:700px){
-  .galeria img{ width: 46%; height:120px; }
-  nav a{ display:inline-block; margin:6px 8px; font-size:14px; }
-  header .top h1{ font-size:20px; }
-  main{ padding:16px; margin:18px; }
-}
-
-/* Lightbox - visualizar imagens maiores */
+/* Lightbox (Mantido) */
 .lightbox {
-  display: none;
-  position: fixed;
-  z-index: 999;
-  padding-top: 50px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background: rgba(0, 0, 0, 0.9);
+    /* ... estilos do lightbox ... */
+    display: none;
+    position: fixed;
+    z-index: 999;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: rgba(0, 0, 0, 0.9);
 }
 
 .lightbox:target {
-  display: block;
+    display: block;
 }
 
 .lightbox img {
-  margin: auto;
-  display: block;
-  max-width: 90%;
-  max-height: 80%;
-  border-radius: 10px;
-  box-shadow: 0 0 20px #000;
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #000;
 }
 
 .lightbox .close {
-  position: absolute;
-  top: 25px;
-  right: 45px;
-  color: #fff;
-  font-size: 40px;
-  font-weight: bold;
-  text-decoration: none;
-  transition: 0.3s;
+    position: absolute;
+    top: 25px;
+    right: 45px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
 }
 
 .lightbox .close:hover {
-  color: #c59d5f;
+    color: var(--gold-2);
 }
